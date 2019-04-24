@@ -27,5 +27,25 @@ $(document).ready(function(){
 	
 	/* COLOQUE AS NOVAS FUNCIONALIDADES AQUI ABAIXO, AINDA DENTRO DO $(document).ready */
 		
+	$("#botao-disciplinas").click(function(e){
+		disciplinas = ""
+		$.ajax({
+			headers:{ "Authorization":"JWT " + sessionStorage.getItem("token") },
+			url: "https://suap.ifrn.edu.br/api/v2/minhas-informacoes/turmas-virtuais/2019/1/",
+			contentType:'application/json',
+			dataType:'json',
+			type:'GET',
+			success:function(data){
+				$(data).each(function(index, elemento){
+					disciplinas = elemento.descricao +"<br>"
+					$('#disciplinas').append(disciplinas)
+				})
+			},
+			error: function(data){
+				alert("Impossível recuperar dados");
+			}
+
+		})
+	})
 });
 
