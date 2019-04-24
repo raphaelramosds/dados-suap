@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Programação Orientada a Serviços - Alba Lopes</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="wrapper"  class="toggled">
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+			<button type="button" id="botao-meusdados" class="btn btn-primary mb-2">Carregar meus dados</button>  
+
+            <div id="mensagem" class="alert" role="alert">
+            </div>
+            
+			<div id="dados-usuario">
+                <table class="table">
+                    <tr>    
+                        <th><img id="usuario-img" src=""></th>
+                        <td id="usuario-nome_usual">---</th>
+                    </tr>
+                    <tr>
+                        <th>Vínculo</th>
+                        <td id="usuario-tipo_vinculo">---</th>
+                    </tr>
+                    <tr>
+                        <th>E-mail</th>
+                        <td id="usuario-email">---</th>
+                    </tr>
+                    <tr>
+                        <th>Matrícula</th>
+                        <td id="usuario-matricula">---</th>
+                    </tr>
+                </table>
+            	
+            </div>
+
+            <pre id="dados"></pre>
+            
+			<div id="disciplinas">
+			</div>
+			
+			<div id="avaliacoes">
+			</div>
+            
+        </div>
+            
+		<button type="button" id="botao-sair" class="btn btn-primary mb-2">Sair</button>  
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/apisuap.js"></script>
+    <script src="js/funcionalidades.js"></script>
+
+</body>
+
+</html>
