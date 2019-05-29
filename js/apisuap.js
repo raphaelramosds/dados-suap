@@ -25,7 +25,8 @@ $(document).ready(function(){
 				window.location.href="dados.html"; //Redirecionando para a página dados.html
 			},
 			error: function(data){
-				alert(JSON.stringify(data))// Mostrar JSON dos erros 
+				// alert(JSON.stringify(data)) // Mostrar JSON dos erros 
+				$('#autenticacao').css("display","block")
 			}
 		});
 
