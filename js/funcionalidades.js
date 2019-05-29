@@ -25,8 +25,6 @@ $(document).ready(function(){
 		});
 	});
 	
-	
-	/* COLOQUE AS NOVAS FUNCIONALIDADES AQUI ABAIXO, AINDA DENTRO DO $(document).ready */
 		
 	$("#botao-disciplinas").click(function(e){
 		disciplinas = ""
@@ -49,16 +47,6 @@ $(document).ready(function(){
 		})
 	})
 
-/*
-<b id="disc"></b>
-<ul>
-	<li id="primeiro_b"></li>
-	<li id="segundo_b"></li>
-	<li id="terceiro_b"></li>
-	<li id="quarto_b"></li>
-</ul>
-*/
-
 	$("#botao-boletim").click(function(e){
 		ano_letivo = "2019"
 		periodo_letivo = "1"
@@ -72,15 +60,26 @@ $(document).ready(function(){
 				$(data).each(function(index,elemento){
 					disc = $("<b></b>")
 					lista = $("<ul></ul>")
-					//d = elemento.disciplina +": "+ elemento.nota_etapa_1.nota + "<br>"
-					if(elemento.nota_etapa_1.nota == null || elemento.nota_etapa_2.nota == null || elemento.nota_etapa_3.nota == null || elemento.nota_etapa_4.nota == null){
-						elemento.nota_etapa_1.nota, elemento.nota_etapa_2.nota, elemento.nota_etapa_3.nota, elemento.nota_etapa_4.nota = "--"
+
+					if(elemento.nota_etapa_1.nota == null ){
+						elemento.nota_etapa_1.nota = "--"
 					}
+					if(elemento.nota_etapa_2.nota == null){
+						elemento.nota_etapa_2.nota = "--"
+					}
+					if(elemento.nota_etapa_3.nota == null){
+						elemento.nota_etapa_3.nota = "--"
+					}
+					if(elemento.nota_etapa_4.nota == null){
+						elemento.nota_etapa_4.nota = "--"
+					}
+
 					disc.append(elemento.disciplina)
 					lista.append("<li>N1: "+elemento.nota_etapa_1.nota+"</li>")
 					lista.append("<li>N2: "+elemento.nota_etapa_2.nota+"</li>")
 					lista.append("<li>N3: "+elemento.nota_etapa_3.nota+"</li>")
 					lista.append("<li>N4: "+elemento.nota_etapa_4.nota+"</li>")
+
 					$('#boletim').append(disc)
 					$('#boletim').append(lista)
 				})
