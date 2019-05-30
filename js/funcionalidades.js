@@ -1,4 +1,25 @@
+// 1) Exiba o boletim do usuário logado. Utilize o recurso:
+// /api/v2/minhas-informacoes/boletim/{ano_letivo}/{periodo_letivo}/
+
+// 2) Exiba o carômetro dos alunos que ingressaram no ano de 2019 no campus ZN. Para isso, utilize o recurso: 
+// /api/v2/edu/alunos/carometro/{sigla_campus}/{ano_letivo}/
+
+// 3) Exiba o carômetro somente dos alunos que ingressaram no Curso de Informática para internet no ano de 2016 no campus ZN. Para isso, utilize o recurso: 
+// /api/v2/edu/alunos/carometro/{sigla_campus}/{ano_letivo}/
+
+// 4) Exiba a lista dos servidores do campus ZN. Utilize o recurso: 
+// /api/v2/rh/servidores/
+
+// 5) Exiba a lista dos cursos ofertados na ZN. Utilize o recurso: 
+// /api/v2/edu/cursos 
+// Observe o campo diretoria para filtrar pela DIAC/ZN.
+
+// 6) Verifique se o usuário logado é aluno ou servidor. Exiba na tela uma imagem que represente o usuário logado (exemplo: para aluno uma mochila, para servidor um crachá). Utilize o recurso: 
+// /api/v2/minhas-informacoes/meus-dados/
+
+
 $(document).ready(function(){
+	prefixo = "https://suap.ifrn.edu.br/api/v2/"
 
 	$("#botao-meusdados").click(function(e){
 		$.ajax({
@@ -6,7 +27,7 @@ $(document).ready(function(){
 				headers: { 
 					"Authorization" : "JWT "+sessionStorage.getItem("token")
 				},
-				url: "https://suap.ifrn.edu.br/api/v2/minhas-informacoes/meus-dados/",
+				url: prefixo + "minhas-informacoes/meus-dados/",
 				contentType: 'application/json',
 				dataType: 'json',
 				type: 'GET',
@@ -30,7 +51,7 @@ $(document).ready(function(){
 		disciplinas = ""
 		$.ajax({
 			headers:{ "Authorization": "JWT " + sessionStorage.getItem("token") },
-			url: "https://suap.ifrn.edu.br/api/v2/minhas-informacoes/turmas-virtuais/2019/1/",
+			url: prefixo + "minhas-informacoes/turmas-virtuais/2019/1/",
 			contentType:'application/json',
 			dataType:'json',
 			type:'GET',
@@ -52,7 +73,7 @@ $(document).ready(function(){
 		periodo_letivo = "1"
 		$.ajax({
 			headers: {"Authorization" : "JWT " + sessionStorage.getItem("token")},
-			url: "https://suap.ifrn.edu.br/api/v2/minhas-informacoes/boletim/"+ano_letivo+"/"+periodo_letivo+"/",
+			url: prefixo + "minhas-informacoes/boletim/"+ano_letivo+"/"+periodo_letivo+"/",
 			contentType:'application/json',
 			dataType:"json",
 			type:"GET",
@@ -89,5 +110,96 @@ $(document).ready(function(){
 			}
 		})
 	})
+
+	$("#botao-caro2019").click(function(e){
+		$.ajax({
+			headers: {"Authorization" : "JWT " + sessionStorage.getItem("token")},
+			url: prefixo + "/edu/alunos/carometro/zn/2019",
+			contentType: "application/json",
+			dataType: "json",
+			type: "GET",
+			success:function(data){
+				imgs = ""
+				$(data).each(function(index,element){
+					img = "<img width='65px' height='80px' src='https://suap.ifrn.edu.br/"+ element.foto +"'>"
+					imgs += img
+				})
+				$('#carometro').append(imgs);
+			},
+			error:function(data){
+				
+			}
+			
+		})
+	})
+
+	$("#botao-info2016").click(function(e){
+		$.ajax({
+			headers:{"Authorization":"JWT " + sessionStorage.getItem("token")},
+			url: prefixo + "/edu/alunos/carometro/zn/2016",
+			contentType:"application/json",
+			dataType:"json",
+			type:"GET",
+			success:function(data){
+				nome = "Técnico de Nível Médio em Informática para Internet"
+				imgs = ""
+				
+				$(data).each(function(index,element){
+					if(element.curso == nome){
+						img = "<img width='65px' height='80px' src='https://suap.ifrn.edu.br/"+ element.foto +"'>"
+						imgs += img		
+					}	
+				})
+				$('#informatica').append(imgs);	
+			},
+			error:function(data){
+
+			}
+		})
+	})
+
+	$("#botao-servidores").click(function(e){
+		
+		$.ajax({
+			headers:{"Authorization":"JWT " + sessionStorage.getItem("token")},
+			url: prefixo + "rh/servidores",
+			contentType:"application/json",
+			dataType:"json",
+			type:"GET",
+			success:function(data){
+				$(data).each(function(index,element){
+					$(element.results).each(function(i,servidor){
+						$("#servidores").append(servidor.nome + "<br>")
+					})
+					
+				})
+			},
+			error:function(data){
+
+			}
+		})
+	})
+
+	$("#botao-cursos").click(function(e){
+		
+		$.ajax({
+			headers:{"Authorization":"JWT " + sessionStorage.getItem("token")},
+			url: prefixo + "edu/cursos",
+			contentType:"application/json",
+			dataType:"json",
+			type:"GET",
+			success:function(data){
+				console.log(data)
+				$(data).each(function(index,element){
+
+				})
+			},
+			error:function(data){
+
+			}
+		})
+	})
+
+
 });
 
