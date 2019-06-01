@@ -16,10 +16,33 @@
 
 // 6) Verifique se o usuário logado é aluno ou servidor. Exiba na tela uma imagem que represente o usuário logado (exemplo: para aluno uma mochila, para servidor um crachá). Utilize o recurso: 
 // /api/v2/minhas-informacoes/meus-dados/
+prefixo = "https://suap.ifrn.edu.br/api/v2/"
+
+
+$(document).ready(function(e){
+	$.ajax({
+		headers:{"Authorization":"JWT " + sessionStorage.getItem("token")},
+		url: prefixo + "minhas-informacoes/meus-dados/",
+		contentType:"application/JSON",
+		dataType:"JSON",
+		type:"GET",
+		success:function(data){
+			$(data).each(function(index,element){
+				console.log(element.tipo_vinculo)
+				if(element.tipo_vinculo == "Aluno"){
+					$("#autenticacao").attr("src","mochila.png")
+				}
+				else{
+					$("#autenticacao").attr("src","crachá.png")
+				}
+			})
+		}, 
+		error:function(data){}
+	})
+})
 
 
 $(document).ready(function(){
-	prefixo = "https://suap.ifrn.edu.br/api/v2/"
 
 	$("#botao-meusdados").click(function(e){
 		$.ajax({
@@ -29,7 +52,7 @@ $(document).ready(function(){
 				},
 				url: prefixo + "minhas-informacoes/meus-dados/",
 				contentType: 'application/json',
-				dataType: 'json',
+				dataType: 'JSON',
 				type: 'GET',
 				success: function (data) {
 				$('#dados').html(JSON.stringify(data)) // Exibir todos meus dados 
@@ -53,7 +76,7 @@ $(document).ready(function(){
 			headers:{ "Authorization": "JWT " + sessionStorage.getItem("token") },
 			url: prefixo + "minhas-informacoes/turmas-virtuais/2019/1/",
 			contentType:'application/json',
-			dataType:'json',
+			dataType:'JSON',
 			type:'GET',
 			success:function(data){
 				$(data).each(function(index, elemento){
@@ -75,7 +98,7 @@ $(document).ready(function(){
 			headers: {"Authorization" : "JWT " + sessionStorage.getItem("token")},
 			url: prefixo + "minhas-informacoes/boletim/"+ano_letivo+"/"+periodo_letivo+"/",
 			contentType:'application/json',
-			dataType:"json",
+			dataType:"JSON",
 			type:"GET",
 			success:function(data){
 				$(data).each(function(index,elemento){
@@ -116,7 +139,7 @@ $(document).ready(function(){
 			headers: {"Authorization" : "JWT " + sessionStorage.getItem("token")},
 			url: prefixo + "/edu/alunos/carometro/zn/2019",
 			contentType: "application/json",
-			dataType: "json",
+			dataType: "JSON",
 			type: "GET",
 			success:function(data){
 				imgs = ""
@@ -138,7 +161,7 @@ $(document).ready(function(){
 			headers:{"Authorization":"JWT " + sessionStorage.getItem("token")},
 			url: prefixo + "/edu/alunos/carometro/zn/2016",
 			contentType:"application/json",
-			dataType:"json",
+			dataType:"JSON",
 			type:"GET",
 			success:function(data){
 				nome = "Técnico de Nível Médio em Informática para Internet"
@@ -181,25 +204,24 @@ $(document).ready(function(){
 	})
 
 	$("#botao-cursos").click(function(e){
-		
+		nomediretoria = "DIAC/ZN"
 		$.ajax({
 			headers:{"Authorization":"JWT " + sessionStorage.getItem("token")},
 			url: prefixo + "edu/cursos",
 			contentType:"application/json",
-			dataType:"json",
+			dataType:"JSON",
 			type:"GET",
 			success:function(data){
-				console.log(data)
 				$(data).each(function(index,element){
-
+					$(element.results).each(function(i,curso){
+						if(curso.diretoria == nomediretoria){
+							$("#cursos-zn").append(curso.descricao + "<br>")
+						}
+					})
 				})
 			},
-			error:function(data){
-
-			}
+			error:function(data){}
 		})
 	})
-
-
 });
 
